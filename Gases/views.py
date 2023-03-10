@@ -1,5 +1,4 @@
-from django.http import HttpResponse
-from django.template import Template, Context
+from django.shortcuts import render
 from Gases.figura import triangulo_1,triangulo_4,triangulo_5,an_triangulo_1,porcient,an_triangulo_4,an_triangulo_5
 from triangulo_app.models import transformador
 from django.shortcuts import redirect
@@ -104,12 +103,8 @@ def homehtml(request):
     figu = fig.to_html()
     figu1 = fig1.to_html()
     figu2 = fig2.to_html()
-    plantillaex = open('C:\django-rest\Gases\Gases\Plantillas\homeplantilla.html')
-    template = Template(plantillaex.read())
-    plantillaex.close()
-    contexto = Context({'transformadores':lista, 'figura':figu, 'figura1':figu1, 'figura2':figu2})
-    documento = template.render(contexto)
-    return HttpResponse(documento)
+    contexto = {'transformadores':lista, 'figura':figu, 'figura1':figu1, 'figura2':figu2}
+    return render(request, 'homeplantilla.html', contexto)
 
 def eliminartransf(request, id):
     transf = transformador.objects.get(id=id)
@@ -117,13 +112,9 @@ def eliminartransf(request, id):
     return redirect('/')
 
 def fallas(request):  
-    lista = transformador.objects.all()        
-    plantilla = open('C:/django-rest/Gases/Gases/Plantillas/transfallas.html')
-    template = Template(plantilla.read())
-    plantilla.close()
-    contexto = Context({'transformadores':lista})
-    documento = template.render(contexto)
-    return HttpResponse(documento)
+    lista = transformador.objects.all()
+    contexto = {'transformadores':lista}
+    return render(request, 'transfallas.html', contexto)
 
 def triangulo1(request, id):
     transf = transformador.objects.get(id=id)
@@ -132,12 +123,8 @@ def triangulo1(request, id):
     c2h4 = [float(transf.C2H4ppm)]
     fig = triangulo_1 (ch4, c2h2, c2h4, transf.nombre)
     figu = fig.to_html()
-    plantillaex = open('C:/django-rest/Gases/Gases/Plantillas/figura.html')
-    template = Template(plantillaex.read())
-    plantillaex.close()
-    contexto = Context({'figura':figu})
-    documento = template.render(contexto)
-    return HttpResponse(documento)
+    contexto = {'figura':figu}
+    return render(request, 'figura.html', contexto)
 def triangulo4(request, id):
     transf = transformador.objects.get(id=id)
     h2 = [float(transf.H2ppm)]
@@ -145,12 +132,8 @@ def triangulo4(request, id):
     ch4 = [float(transf.CH4ppm)]
     fig = triangulo_1 (h2, c2h6, ch4, transf.nombre)
     figu = fig.to_html()
-    plantillaex = open('C:/django-rest/Gases/Gases/Plantillas/figura.html')
-    template = Template(plantillaex.read())
-    plantillaex.close()
-    contexto = Context({'figura':figu})
-    documento = template.render(contexto)
-    return HttpResponse(documento)
+    contexto = {'figura':figu}
+    return render(request, 'figura.html', contexto)
 def triangulo5(request, id):
     transf = transformador.objects.get(id=id)
     ch4 = [float(transf.CH4ppm)]
@@ -158,11 +141,7 @@ def triangulo5(request, id):
     c2h4 = [float(transf.C2H4ppm)]
     fig = triangulo_1 (ch4, c2h6, c2h4, transf.nombre)
     figu = fig.to_html()
-    plantillaex = open('C:/django-rest/Gases/Gases/Plantillas/figura.html')
-    template = Template(plantillaex.read())
-    plantillaex.close()
-    contexto = Context({'figura':figu})
-    documento = template.render(contexto)
-    return HttpResponse(documento)
+    contexto = {'figura':figu}
+    return render(request, 'figura.html', contexto)
     
     

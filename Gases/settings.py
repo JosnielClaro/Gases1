@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Gases.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['C:\django-rest\Gases1\Gases\Plantillas'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
