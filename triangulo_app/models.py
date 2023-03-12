@@ -8,7 +8,7 @@ class transformador(models.Model):
     C2H2ppm = models.DecimalField(max_digits=20, decimal_places=0, default=0)
     H2ppm = models.DecimalField(max_digits=20, decimal_places=0, default=0)
     C2H6ppm = models.DecimalField(max_digits=20, decimal_places=0, default=0)
-    t1fallas = models.CharField(max_length=2, default='')
-    t4fallas = models.CharField(max_length=2, default='')
-    t5fallas = models.CharField(max_length=2, default='')
+    t1fallas = models.CharField(max_length=2, default='', null=True)
+    t4fallas = models.CharField(max_length=2, default='', null=True)
+    t5fallas = models.CharField(max_length=2, default='', null=True)
     

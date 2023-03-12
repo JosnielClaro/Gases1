@@ -130,7 +130,7 @@ def triangulo4(request, id):
     h2 = [float(transf.H2ppm)]
     c2h6 = [float(transf.C2H6ppm)]
     ch4 = [float(transf.CH4ppm)]
-    fig = triangulo_1 (h2, c2h6, ch4, transf.nombre)
+    fig = triangulo_4 (h2, c2h6, ch4, transf.nombre)
     figu = fig.to_html()
     contexto = {'figura':figu}
     return render(request, 'figura.html', contexto)
@@ -139,7 +139,7 @@ def triangulo5(request, id):
     ch4 = [float(transf.CH4ppm)]
     c2h6 = [float(transf.C2H6ppm)]
     c2h4 = [float(transf.C2H4ppm)]
-    fig = triangulo_1 (ch4, c2h6, c2h4, transf.nombre)
+    fig = triangulo_5 (ch4, c2h6, c2h4, transf.nombre)
     figu = fig.to_html()
     contexto = {'figura':figu}
     return render(request, 'figura.html', contexto)
