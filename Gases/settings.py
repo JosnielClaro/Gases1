@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Gases.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:\django-rest\Gases1\Gases\Plantillas'],
+        'DIRS': [BASE_DIR /'Gases/Plantillas'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +123,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR/'files'
+MEDIA_URL = '/media-files/'

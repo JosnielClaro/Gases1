@@ -112,8 +112,6 @@ def triangulo_1 (ch4, c2h2, c2h4, name):
         }
     layout = {
         "title": "Triangulo 1 de Duval",
-        "width": 1044,
-        "height": 545,
         "ternary": {
             "sum": 100,
             "aaxis": {
@@ -227,8 +225,6 @@ def triangulo_4 (h2, c2h6, ch4, name):
         }
     layout = {
         "title": "Triangulo 4 de Duval",
-        "width": 1044,
-        "height": 545,
         "ternary": {
             "sum": 100,
             "aaxis": {
@@ -367,8 +363,6 @@ def triangulo_5 (ch4, c2h6, c2h4, name):
         }
     layout = {
         "title": "Triangulo 5 de Duval",
-        "width": 1044,
-        "height": 545,
         "ternary": {
             "sum": 100,
             "aaxis": {

@@ -4,4 +4,4 @@ from rest_framework import serializers
 class gasserializer(serializers.ModelSerializer):
     class Meta:
         model = transformador
-        fields = '__all__'
+        fields = ('__all__')

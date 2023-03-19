@@ -2,7 +2,10 @@ from django.shortcuts import render
 from Gases.figura import triangulo_1,triangulo_4,triangulo_5,an_triangulo_1,porcient,an_triangulo_4,an_triangulo_5
 from triangulo_app.models import transformador
 from django.shortcuts import redirect
-#from plotly.offline import plot
+from rest_framework.generics import ListAPIView
+from triangulo_app.serializer import gasserializer
+# from plotly.offline import plot
+# import plotly.graph_objects as go
 # Create your views here.
 def homehtml(request):
     lista = transformador.objects.all()
@@ -143,5 +146,15 @@ def triangulo5(request, id):
     figu = fig.to_html()
     contexto = {'figura':figu}
     return render(request, 'figura.html', contexto)
+
+class TransfList(ListAPIView):
+    serializer_class = gasserializer
     
+    def get_queryset(self):
+        kword = self.request.query_params.get('kword', '')
+        return transformador.objects.filter(
+        nombre__icontains=kword
+        )
+
+
     
