@@ -21,8 +21,11 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/fallas/"><i class="fas fa-table"></i><span>Table</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Login</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="blank.html"><i class="fas fa-window-maximize"></i><span>Blank Page</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="/agregar"><i class="fas fa-window-maximize"></i><span>Blank Page</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i><span>Logout</span></a></li>
+                    {% endif %}
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -34,24 +37,98 @@
                         <h3 class="text-dark mb-0">Dashboard</h3>
                     </div>
                     <div class="row">
-                        <div class="col-lg-7 col-xl-8">
+                        <div class="col-lg-12 col-xl-12">
                             <div class="card-body">
                                 <div>  {{figura|safe}}   </div>  
                             </div>
                         </div>
-                        <div class="col-lg-7 col-xl-8">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-xl-12">
                             <div class="card-body">
-                                <div>  {{figura|safe}}   </div>  
+                                <div>  {{figura1|safe}}   </div>  
                             </div>
                         </div>
-                        <div class="col-lg-5 col-xl-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h6 class="text-primary fw-bold m-0">Agregar Transformador</h6>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="card-body">
+                                <div>  {{figura2|safe}}   </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="app">
+                <div class="container-fluid">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Concentracion de Gases</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- <div class="col-md-6 text-nowrap">
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
+                                                <option value="10" selected="">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>&nbsp;</label></div>
+                                </div> -->
+                                <div class="col-md-6">
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                        <label class="form-label"><input type="search"
+                                            class="form-control"
+                                            placeholder="Buscar por Nombre"
+                                            v-model="kword"
+                                            default=""></label></div>
                                 </div>
-                                <div class="card-body">
-                                    <div> {{figura1 | safe}} </div>
-                                </div>
+                            </div>
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                                <table class="table my-0" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>transformadores</th>               
+                                            <th>CH4ppm</th>               
+                                            <th>C2H4ppm</th>      
+                                            <th>C2H6ppm</th>      
+                                            <th>H2ppm</th>   
+                                            <th>C2H2ppm</th> 
+                                            {% if user.is_authenticated %}
+                                            <th colspan="2">Opciones</th>
+                                            {% endif %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                        v-for="trans in transformadores"
+                                        :key="trans.id">
+                                        <td>{$trans.nombre$}</td>
+                                        <td>{$trans.CH4ppm$}</td>
+                                        <td>{$trans.C2H4ppm$}</td>
+                                        <td>{$trans.C2H6ppm$}</td>
+                                        <td>{$trans.H2ppm$}</td>
+                                        <td>{$trans.C2H2ppm$}</td>
+                                        {% if user.is_authenticated %}
+                                        <td><a :href="'admin/triangulo_app/transformador/'+trans.id+'/change'" class="btn btn-block btn-info">Editar</a></td> 
+                                        <td><a :href="'eliminartransf/'+trans.id" class="btn btn-block btn-danger">Eliminar</a></td>
+                                        {% endif %}
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>transformadores</th>               
+                                            <th>CH4ppm</th>               
+                                            <th>C2H4ppm</th>      
+                                            <th>C2H6ppm</th>      
+                                            <th>H2ppm</th>   
+                                            <th>C2H2ppm</th> 
+                                            {% if user.is_authenticated %}
+                                            <th colspan="2">Opciones</th>
+                                            {% endif %}
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -64,8 +141,10 @@
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+    <script type="text/javascript" src="{% static 'vue.js' %}"></script>
+    <script type="text/javascript" src="{% static 'axios.js' %}"></script>
+    <script type="text/javascript" src="{% static 'app.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'assets/js/chart.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
 </body>

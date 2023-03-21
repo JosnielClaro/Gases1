@@ -103,7 +103,7 @@ def triangulo_1 (ch4, c2h2, c2h4, name):
         "c": c2h4,
         "mode": "markers",
         "type": "scatterternary", 
-        'hovertemplate': name,       
+        'hovertext': name,       
         "marker": {
             "size": 20,
             "color": "black",

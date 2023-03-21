@@ -9,16 +9,32 @@ const { createApp } = Vue
     data() {
       return {
         message: 'Hello ',
+        mostrar: '',
         kword: '',
         transformadores: []
       }
     },
     watch:{
+        mostrar: function(val) {
+          this.Mostrar(val);
+        },
+
         kword: function(val) {
             this.Buscar(val);
         }
     },
     methods:{
+        Mostrar: function(mostrar) {
+          var self = this;
+          axios.get('/api/mostrar/?kword=' + mostrar)
+          .then(function(response){
+              self.transformadores=response.data
+              console.log(response.data)
+          })
+          .catch(function(error){
+              console.log(error);
+          })
+      },
         Buscar: function(kword) {
             var self = this;
             axios.get('/api/buscar/?kword=' + kword)

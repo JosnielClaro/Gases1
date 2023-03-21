@@ -155,6 +155,27 @@ class TransfList(ListAPIView):
         return transformador.objects.filter(
         nombre__icontains=kword
         )
+class TransfList1(ListAPIView):
+    serializer_class = gasserializer
+    
+    def get_queryset(self):
+        kword = self.request.query_params.get('kword', '')
+        return transformador.objects.filter(
+        t1fallas__icontains = kword
+        )
 
+def agregartransf(request):
+    nombre = request.POST['Nombre']
+    CH4ppm = float(request.POST['CH4pmm'])
+    C2H4ppm = float(request.POST['C2H4ppm'])
+    C2H6ppm = float(request.POST['C2H6ppm'])
+    H2ppm = float(request.POST['H2ppm'])
+    C2H2ppm = float(request.POST['C2H2ppm'])
+    transformador.objects.create(nombre=nombre, CH4ppm=CH4ppm, C2H4ppm=C2H4ppm, C2H6ppm=C2H6ppm, H2ppm=H2ppm, C2H2ppm=C2H2ppm)
+    return redirect('/agregar')
+    
+
+def agregar(request):
+    return render(request, 'agregar.html')
 
     

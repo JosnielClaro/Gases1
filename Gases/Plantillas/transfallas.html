@@ -21,8 +21,11 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="/fallas"><i class="fas fa-table"></i><span>Table</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Login</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="blank.html"><i class="fas fa-window-maximize"></i><span>Blank Page</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="/agregar"><i class="fas fa-window-maximize"></i><span>Blank Page</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i><span>Logout</span></a></li>
+                    {% endif %}
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -30,29 +33,34 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="app">
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Fallas</h3>
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Employee Info</p>
+                            <p class="text-primary m-0 fw-bold">Fallas de los Transformadores</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <!-- <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
-                                </div> -->
+                                <div class="col-md-6 text-nowrap">
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Buscar por falla en triángulo 1
+                                        <select class="d-inline-block form-select form-select-sm"
+                                        v-model="mostrar">
+                                            <option value="">all</option>
+                                            <option value="PD">PD</option>
+                                            <option value="T1">T1</option>
+                                            <option value="T2">T2</option>
+                                            <option value="T3">T3</option>
+                                            <option value="D1">D1</option>
+                                            <option value="D2">D2</option>
+                                            <option value="DT">DT</option>
+                                        </select></label>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
                                         <label class="form-label"><input type="search"
                                             class="form-control"
-                                            placeholder="Buscar"
-                                            v-model="kword" 
-                                            placeholder="Search"
-                                            default=""></label></div>
+                                            placeholder="Buscar por Nombre"
+                                            v-model="kword"
+                                            ></label></div>
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">

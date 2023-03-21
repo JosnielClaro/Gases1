@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from Gases.views import homehtml, eliminartransf, fallas, triangulo1, triangulo4, triangulo5, TransfList
+from Gases.views import homehtml, eliminartransf, fallas, triangulo1
+from Gases.views import triangulo4, triangulo5, TransfList, TransfList1, agregartransf, agregar
+from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('api/', include('triangulo_app.urls')),
@@ -25,5 +27,10 @@ urlpatterns = [
     path('fallas/triangulo1/<int:id>', triangulo1),
     path('fallas/triangulo4/<int:id>', triangulo4),
     path('fallas/triangulo5/<int:id>', triangulo5),
-    path('api/buscar/', TransfList.as_view())
+    path('login', LoginView.as_view(template_name = 'login.html')),
+    path('logout', LogoutView.as_view(template_name = 'logout.html')),
+    path('api/buscar/', TransfList.as_view()),
+    path('agregartransf/', agregartransf),
+    path('agregar', agregar),
+    path('api/mostrar/', TransfList1.as_view())
 ]
