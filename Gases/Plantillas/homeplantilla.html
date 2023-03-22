@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+                                <table class="table my-0 btnEliminacion" id="dataTable">
                                     <thead>
                                         <tr>
                                             <th>transformadores</th>               
@@ -103,16 +103,16 @@
                                         <tr
                                         v-for="trans in transformadores"
                                         :key="trans.id">
-                                        <td>{$trans.nombre$}</td>
-                                        <td>{$trans.CH4ppm$}</td>
-                                        <td>{$trans.C2H4ppm$}</td>
-                                        <td>{$trans.C2H6ppm$}</td>
-                                        <td>{$trans.H2ppm$}</td>
-                                        <td>{$trans.C2H2ppm$}</td>
-                                        {% if user.is_authenticated %}
-                                        <td><a :href="'admin/triangulo_app/transformador/'+trans.id+'/change'" class="btn btn-block btn-info">Editar</a></td> 
-                                        <td><a :href="'eliminartransf/'+trans.id" class="btn btn-block btn-danger">Eliminar</a></td>
-                                        {% endif %}
+                                            <td>{$trans.nombre$}</td>
+                                            <td>{$trans.CH4ppm$}</td>
+                                            <td>{$trans.C2H4ppm$}</td>
+                                            <td>{$trans.C2H6ppm$}</td>
+                                            <td>{$trans.H2ppm$}</td>
+                                            <td>{$trans.C2H2ppm$}</td>
+                                            {% if user.is_authenticated %}
+                                            <td><a :href="'editar/'+trans.id" class="btn btn-block btn-info">Editar</a></td> 
+                                            <td><a :href="'eliminartransf/'+trans.id" class="btn btn-block btn-danger btnEliminacion" @click="Borrar">Eliminar</a></td>
+                                            {% endif %}
                                         </tr>
                                     </tbody>
                                     <tfoot>
@@ -144,6 +144,7 @@
     <script type="text/javascript" src="{% static 'vue.js' %}"></script>
     <script type="text/javascript" src="{% static 'axios.js' %}"></script>
     <script type="text/javascript" src="{% static 'app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'sweetalert.min.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from Gases.views import homehtml, eliminartransf, fallas, triangulo1
+from Gases.views import homehtml, eliminartransf, fallas, triangulo1, editar, editartransf
 from Gases.views import triangulo4, triangulo5, TransfList, TransfList1, agregartransf, agregar
 from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
@@ -31,6 +31,8 @@ urlpatterns = [
     path('logout', LogoutView.as_view(template_name = 'logout.html')),
     path('api/buscar/', TransfList.as_view()),
     path('agregartransf/', agregartransf),
+    path('editartransf/', editartransf),
     path('agregar', agregar),
+    path('editar/<int:id>', editar),
     path('api/mostrar/', TransfList1.as_view())
 ]

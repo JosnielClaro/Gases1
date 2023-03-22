@@ -1,3 +1,4 @@
+
 const { createApp } = Vue
 
   createApp({
@@ -15,6 +16,7 @@ const { createApp } = Vue
       }
     },
     watch:{
+        
         mostrar: function(val) {
           this.Mostrar(val);
         },
@@ -24,6 +26,27 @@ const { createApp } = Vue
         }
     },
     methods:{
+        Borrar: function(e){
+          e.preventDefault();
+           swal({
+              title: "Estás seguro?",
+              text: "Este objeto no se podrá recuperar",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                swal("Poof! El objeto ha sido eliminado", {
+                  icon: "success",
+                });
+                location.href = e.target.href;
+              } else {
+                swal("Este objeto está a salvo")
+                
+              }
+            })          
+          },
         Mostrar: function(mostrar) {
           var self = this;
           axios.get('/api/mostrar/?kword=' + mostrar)
@@ -49,3 +72,5 @@ const { createApp } = Vue
 
     }
   }).mount('#app')
+
+    

@@ -166,7 +166,7 @@ class TransfList1(ListAPIView):
 
 def agregartransf(request):
     nombre = request.POST['Nombre']
-    CH4ppm = float(request.POST['CH4pmm'])
+    CH4ppm = float(request.POST['CH4ppm'])
     C2H4ppm = float(request.POST['C2H4ppm'])
     C2H6ppm = float(request.POST['C2H6ppm'])
     H2ppm = float(request.POST['H2ppm'])
@@ -177,5 +177,31 @@ def agregartransf(request):
 
 def agregar(request):
     return render(request, 'agregar.html')
+
+def editar (request, id):
+    transf = transformador.objects.get(id=id)
+    data = {
+        'transf': transf
+    }
+    return render(request, 'editar.html', data)
+def editartransf (request):
+    id = int(request.POST['id'])
+    nombre = request.POST['Nombre']
+    CH4ppm = float(request.POST['CH4ppm'])
+    C2H4ppm = float(request.POST['C2H4ppm'])
+    C2H6ppm = float(request.POST['C2H6ppm'])
+    H2ppm = float(request.POST['H2ppm'])
+    C2H2ppm = float(request.POST['C2H2ppm'])
+    
+    transf = transformador.objects.get(id=id)
+    transf.nombre = nombre
+    transf.CH4ppm = CH4ppm
+    transf.C2H4ppm = C2H4ppm
+    transf.C2H6ppm = C2H6ppm
+    transf.H2ppm = H2ppm
+    transf.C2H2ppm = C2H2ppm
+    transf.save()
+    return redirect('/agregar')
+    
 
     

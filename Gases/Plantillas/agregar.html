@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -19,11 +19,11 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link active" href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/fallas/"><i class="fas fa-table"></i><span>Table</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/login"><i class="far fa-user-circle"></i><span>Login</span></a></li>
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="/agregar"><i class="fas fa-window-maximize"></i><span>Blank Page</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/agregar"><i class="fas fa-window-maximize"></i><span>Agregar</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i><span>Logout</span></a></li>
                     {% endif %}
                 </ul>
@@ -36,24 +36,25 @@
                 <div>
                     <div class="row text-center d-lg-flex align-items-lg-center">
                         <div class="col d-lg-flex justify-content-lg-center">
-                            <form action="/agregartransf/" method="POST">
+                            <form action="/agregartransf/" method="POST" id="Form">
                                 {% csrf_token %}
                                 <div class="row" style="padding: 0.5in;">
                                     <div class="col-md-6">
                                         <label class="form-label">Nombre</label>
-                                        <input class="form-control" type="text" name="Nombre" placeholder="Nombre" />
+                                        <input class="form-control" type="text" name="Nombre" id="Nombre"
+                                         placeholder="Nombre" maxlength="30" required autofocus minlength="3"/>
                                         <label class="form-label">CH4pmm</label>
-                                        <input class="form-control" type="number" name="CH4pmm" value="0" />
+                                        <input required class="form-control" type="number" name="CH4pmm" value="0" id="CH4pmm"/>
                                         <label class="form-label">C2H4ppm</label>
-                                        <input class="form-control" type="number" name="C2H4ppm" value="0" />
+                                        <input required class="form-control" type="number" name="C2H4ppm" value="0" id="C2H4ppm"/>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">C2H6ppm</label>
-                                        <input class="form-control" type="number" name="C2H6ppm" value="0" />
+                                        <input required class="form-control" type="number" name="C2H6ppm" value="0" id="C2H6ppm"/>
                                         <label class="form-label">H2ppm</label>
-                                        <input class="form-control" type="number" name="H2ppm" value="0" />
+                                        <input required class="form-control" type="number" name="H2ppm" value="0" />
                                         <label class="form-label">C2H2ppm</label>
-                                        <input class="form-control" type="number" name="C2H2ppm" value="0" />                                
+                                        <input required class="form-control" type="number" name="C2H2ppm" value="0" />                                
                                     </div>
                                 </div>
                                 
@@ -75,6 +76,7 @@
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
+    <script src="{% static 'gestiontransf.js' %}"></script>
 </body>
 
 </html>
