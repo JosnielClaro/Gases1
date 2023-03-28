@@ -395,7 +395,7 @@ def triangulo_5 (ch4, c2h6, c2h4, name):
     return fig
 
 def an_triangulo_1 (a_ch4, b_c2h2, c_c2h4):
-    if 0<=a_ch4<87 and 0<c_c2h4<=23 and 13<b_c2h2<100:
+    if 0<=a_ch4<87 and 0<=c_c2h4<=23 and 13<b_c2h2<100:
         return ('D1')        
     elif 0<=a_ch4<50 and 30<c_c2h4<77 and 23<=b_c2h2<70:
         return ('D2')        

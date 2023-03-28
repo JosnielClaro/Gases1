@@ -91,9 +91,9 @@
                                             <th>transformadores</th>               
                                             <th>CH4ppm</th>               
                                             <th>C2H4ppm</th>      
-                                            <th>C2H6ppm</th>      
+                                            <th>C2H2ppm</th>      
                                             <th>H2ppm</th>   
-                                            <th>C2H2ppm</th> 
+                                            <th>C2H6ppm</th> 
                                             {% if user.is_authenticated %}
                                             <th colspan="2">Opciones</th>
                                             {% endif %}
@@ -106,9 +106,9 @@
                                             <td>{$trans.nombre$}</td>
                                             <td>{$trans.CH4ppm$}</td>
                                             <td>{$trans.C2H4ppm$}</td>
-                                            <td>{$trans.C2H6ppm$}</td>
-                                            <td>{$trans.H2ppm$}</td>
                                             <td>{$trans.C2H2ppm$}</td>
+                                            <td>{$trans.H2ppm$}</td>
+                                            <td>{$trans.C2H6ppm$}</td>
                                             {% if user.is_authenticated %}
                                             <td><a :href="'editar/'+trans.id" class="btn btn-block btn-info">Editar</a></td> 
                                             <td><a :href="'eliminartransf/'+trans.id" class="btn btn-block btn-danger btnEliminacion" @click="Borrar">Eliminar</a></td>
@@ -120,9 +120,9 @@
                                             <th>transformadores</th>               
                                             <th>CH4ppm</th>               
                                             <th>C2H4ppm</th>      
-                                            <th>C2H6ppm</th>      
+                                            <th>C2H2ppm</th>      
                                             <th>H2ppm</th>   
-                                            <th>C2H2ppm</th> 
+                                            <th>C2H6ppm</th> 
                                             {% if user.is_authenticated %}
                                             <th colspan="2">Opciones</th>
                                             {% endif %}
