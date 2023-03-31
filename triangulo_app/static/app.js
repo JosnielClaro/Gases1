@@ -236,7 +236,7 @@ const { createApp } = Vue
               <div class="row" style="padding: 0.5in;">
                   <div class="col-md-6">
                       <label class="form-label">Nombre</label>
-                      <input class="form-control" type="text" name="Nombre" id="Nombre" value="Nombre"
+                      <input class="form-control" type="text" name="Nombre" id="Nombre" value=""
                       placeholder="Nombre" maxlength="30" required autofocus minlength="3"/>
                       <label class="form-label">CH4pmm</label>
                       <input required class="form-control" type="number" name="CH4ppm" value="0" id="CH4ppm"/>
@@ -260,8 +260,8 @@ const { createApp } = Vue
               const datos = document.querySelector("#Form");
               const act_datos = new FormData(datos);
               const formDataObj = {};
-              var t4fallas = "";
-              var t5fallas = "";
+              var t4fallas = "-";
+              var t5fallas = "-";
               act_datos.forEach((value, key) => (formDataObj[key] = value));
               const t1fallas = this.an_triangulo_1(Number(formDataObj.CH4ppm), Number(formDataObj.C2H2ppm), Number(formDataObj.C2H4ppm));
               if (t1fallas == 'PD' || t1fallas == 'T1' || t1fallas == 'T2'){
