@@ -466,6 +466,10 @@ def porcient (list1, list2, list3):
     mul = [100*(x)/(x+y+z) for x,y,z in zip(list1,list2,list3)]
     return mul
 
+def porcient1 (x, y, z):
+    mul = 100*(x)/(x+y+z)
+    return mul
+
 
 
    

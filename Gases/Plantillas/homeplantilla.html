@@ -59,80 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div id="app">
-                <div class="container-fluid">
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Concentracion de Gases</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <!-- <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
-                                </div> -->
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label"><input type="search"
-                                            class="form-control"
-                                            placeholder="Buscar por Nombre"
-                                            v-model="kword"
-                                            default=""></label></div>
-                                </div>
-                            </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0 btnEliminacion" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>transformadores</th>               
-                                            <th>CH4ppm</th>               
-                                            <th>C2H4ppm</th>      
-                                            <th>C2H2ppm</th>      
-                                            <th>H2ppm</th>   
-                                            <th>C2H6ppm</th> 
-                                            {% if user.is_authenticated %}
-                                            <th colspan="2">Opciones</th>
-                                            {% endif %}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                        v-for="trans in transformadores"
-                                        :key="trans.id">
-                                            <td>{$trans.nombre$}</td>
-                                            <td>{$trans.CH4ppm$}</td>
-                                            <td>{$trans.C2H4ppm$}</td>
-                                            <td>{$trans.C2H2ppm$}</td>
-                                            <td>{$trans.H2ppm$}</td>
-                                            <td>{$trans.C2H6ppm$}</td>
-                                            {% if user.is_authenticated %}
-                                            <td><a :href="'editar/'+trans.id" class="btn btn-block btn-info">Editar</a></td> 
-                                            <td><a :href="'eliminartransf/'+trans.id" class="btn btn-block btn-danger btnEliminacion" @click="Borrar">Eliminar</a></td>
-                                            {% endif %}
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>transformadores</th>               
-                                            <th>CH4ppm</th>               
-                                            <th>C2H4ppm</th>      
-                                            <th>C2H2ppm</th>      
-                                            <th>H2ppm</th>   
-                                            <th>C2H6ppm</th> 
-                                            {% if user.is_authenticated %}
-                                            <th colspan="2">Opciones</th>
-                                            {% endif %}
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
@@ -141,10 +68,6 @@
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script type="text/javascript" src="{% static 'vue.js' %}"></script>
-    <script type="text/javascript" src="{% static 'axios.js' %}"></script>
-    <script type="text/javascript" src="{% static 'app.js' %}"></script>
-    <script type="text/javascript" src="{% static 'sweetalert.min.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>

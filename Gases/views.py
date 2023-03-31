@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from Gases.figura import triangulo_1,triangulo_4,triangulo_5,an_triangulo_1,porcient,an_triangulo_4,an_triangulo_5
+from Gases.figura import triangulo_1,triangulo_4,triangulo_5,an_triangulo_1,porcient,an_triangulo_4,an_triangulo_5,porcient1
 from triangulo_app.models import transformador
 from django.shortcuts import redirect
 from rest_framework.generics import ListAPIView
@@ -54,10 +54,6 @@ def homehtml(request):
     fig = triangulo_1 (ch4a, c2h2a, c2h4a, name)
     for a,b,c,d,e,f,g,h in zip(ch4a, c2h2a, c2h4a, name, ch4, h2, c2h6, lista):
         er = h
-        er.t1fallas = an_triangulo_1 (a, b, c)
-        er.t4fallas = ''
-        er.t5fallas = ''
-        er.save()
         if an_triangulo_1 (a, b, c) == 'PD' or (
             an_triangulo_1 (a, b, c) == 'T1') or (
                 an_triangulo_1 (a, b, c) == 'T2'):
@@ -70,12 +66,6 @@ def homehtml(request):
     ch4c = porcient(ch4b,h2b,c2h6b)
     h2c = porcient(h2b,ch4b,c2h6b)
     c2h6c = porcient(c2h6b,ch4b,h2b)
-    
-    for a,b,c,d in zip(h2c, c2h6c, ch4c, id4):
-        er4 = d
-        er4.t4fallas = an_triangulo_4 (a, b, c)
-        er4.save()
-        
 
     ch4d = []
     c2h6d = []
@@ -96,12 +86,7 @@ def homehtml(request):
     ch4e = porcient(ch4d,c2h4d,c2h6d)
     c2h6e = porcient(c2h6d,ch4d,c2h4d)
     c2h4e = porcient(c2h4d,c2h6d,ch4d)
-    
-    for a,b,c,d in zip(ch4e, c2h6e, c2h4e, id5):
-        er5 = d
-        er5.t5fallas = an_triangulo_5 (a, b, c)
-        er5.save()
-            
+                
     fig2 = triangulo_5 (ch4e, c2h6e, c2h4e, named)
     figu = fig.to_html()
     figu1 = fig1.to_html()
@@ -112,7 +97,7 @@ def homehtml(request):
 def eliminartransf(request, id):
     transf = transformador.objects.get(id=id)
     transf.delete()
-    return redirect('/')
+    return 0
 
 def fallas(request):  
     lista = transformador.objects.all()
@@ -171,7 +156,28 @@ def agregartransf(request):
     C2H6ppm = float(request.POST['C2H6ppm'])
     H2ppm = float(request.POST['H2ppm'])
     C2H2ppm = float(request.POST['C2H2ppm'])
-    transformador.objects.create(nombre=nombre, CH4ppm=CH4ppm, C2H4ppm=C2H4ppm, C2H6ppm=C2H6ppm, H2ppm=H2ppm, C2H2ppm=C2H2ppm)
+    t4fallas = ''
+    t5fallas = ''
+    ch4a = porcient1(CH4ppm,C2H2ppm,C2H4ppm)
+    c2h2a = porcient1(C2H2ppm,CH4ppm,C2H4ppm)
+    c2h4a = porcient1(C2H4ppm,CH4ppm,C2H2ppm)
+    t1fallas = an_triangulo_1 (ch4a, c2h2a, c2h4a)
+    if t1fallas == 'PD' or (
+            t1fallas == 'T1') or (
+                t1fallas == 'T2'):    
+                    ch4b = porcient1(CH4ppm,H2ppm,C2H6ppm)
+                    h2b = porcient1(H2ppm,CH4ppm,C2H6ppm)
+                    c2h6b = porcient1(C2H6ppm,CH4ppm,H2ppm)
+                    t4fallas = an_triangulo_4 (ch4b, h2b, c2h6b)
+    if t1fallas == 'T2' or(
+            t1fallas == 'T3'):                
+                ch4c = porcient1(CH4ppm,C2H4ppm,C2H6ppm)
+                c2h6c = porcient1(C2H6ppm,CH4ppm,C2H4ppm)
+                c2h4c = porcient1(C2H4ppm,C2H6ppm,CH4ppm)
+                t5fallas = an_triangulo_5 (ch4c, c2h6c, c2h4c)
+    
+    transformador.objects.create(nombre=nombre, CH4ppm=CH4ppm, C2H4ppm=C2H4ppm, t1fallas=t1fallas, t4fallas=t4fallas,
+                                t5fallas=t5fallas, C2H6ppm=C2H6ppm, H2ppm=H2ppm, C2H2ppm=C2H2ppm)
     return redirect('/agregar')
     
 

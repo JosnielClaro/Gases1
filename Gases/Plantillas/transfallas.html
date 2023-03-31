@@ -39,7 +39,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6 text-nowrap">
+                                <div class="col-md-7 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Buscar por falla en triángulo 1
                                         <select class="d-inline-block form-select form-select-sm"
                                         v-model="mostrar">
@@ -54,7 +54,10 @@
                                         </select></label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-1">
+                                    <button class="btn btn-block btn-info" @click="Agregar">Agregar</button>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
                                         <label class="form-label"><input type="search"
                                             class="form-control"
@@ -63,36 +66,61 @@
                                             ></label></div>
                                 </div>
                             </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>transformadores</th>               
-                                            <th>triangulo 1</th>               
-                                            <th>triangulo 4</th>      
-                                            <th>triangulo 5</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                        v-for="trans in transformadores"
-                                        :key="trans.id">
-                                            <th>{$ trans.nombre $}</th>
-                                            <td><a :href="'triangulo1/'+trans.id">{$trans.t1fallas$}</a></td>
-                                            <td><a :href="'triangulo4/'+trans.id">{$trans.t4fallas$}</a></td>
-                                            <td><a :href="'triangulo5/'+trans.id">{$trans.t5fallas$}</a></td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>transformadores</th>               
-                                            <th>triangulo 1</th>               
-                                            <th>triangulo 4</th>      
-                                            <th>triangulo 5</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                            <table class="table my-0 btnEliminacion" id="dataTable">
+                                {% csrf_token %}
+                                <thead>
+                                    <tr>
+                                        <th>transformadores</th>               
+                                        <th>CH4ppm</th>               
+                                        <th>C2H4ppm</th>      
+                                        <th>C2H2ppm</th>      
+                                        <th>H2ppm</th>   
+                                        <th>C2H6ppm</th> 
+                                        <th>triangulo 1</th>               
+                                        <th>triangulo 4</th>      
+                                        <th>triangulo 5</th>
+                                        {% if user.is_authenticated %}
+                                        <th colspan="2">Opciones</th>
+                                        {% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                    v-for="(trans, id) in transformadores"
+                                    :key="id">
+                                        <td>{$trans.nombre$}</td>
+                                        <td>{$trans.CH4ppm$}</td>
+                                        <td>{$trans.C2H4ppm$}</td>
+                                        <td>{$trans.C2H2ppm$}</td>
+                                        <td>{$trans.H2ppm$}</td>
+                                        <td>{$trans.C2H6ppm$}</td>
+                                        <td><a :href="'triangulo1/'+trans.id">{$trans.t1fallas$}</a></td>
+                                        <td><a v-if="trans.t4fallas != '-'" :href="'triangulo4/'+trans.id">{$trans.t4fallas$}</a>
+                                        <p v-else></p></td>
+                                        <td><a v-if="trans.t5fallas != '-'" :href="'triangulo5/'+trans.id">{$trans.t5fallas$}</a></td>
+                                        {% if user.is_authenticated %}
+                                        <td> <button class="btn btn-block btn-info" @click="Editar(trans)">Editar</button></td> 
+                                        <td> <button class="btn btn-block btn-danger btnEliminacion" @click="Borrar(trans.id, id)">Eliminar </button></td>
+                                        {% endif %}
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>transformadores</th>               
+                                        <th>CH4ppm</th>               
+                                        <th>C2H4ppm</th>      
+                                        <th>C2H2ppm</th>      
+                                        <th>H2ppm</th>   
+                                        <th>C2H6ppm</th> 
+                                        <th>triangulo 1</th>               
+                                        <th>triangulo 4</th>      
+                                        <th>triangulo 5</th>
+                                        {% if user.is_authenticated %}
+                                        <th colspan="2">Opciones</th>
+                                        {% endif %}
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -107,6 +135,8 @@
     <script type="text/javascript" src="{% static 'vue.js' %}"></script>
     <script type="text/javascript" src="{% static 'axios.js' %}"></script>
     <script type="text/javascript" src="{% static 'app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'sweetalert.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'sweetalert2.all.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>

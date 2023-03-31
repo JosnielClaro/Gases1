@@ -18,9 +18,10 @@ from django.urls import path, include
 from Gases.views import homehtml, eliminartransf, fallas, triangulo1, editar, editartransf
 from Gases.views import triangulo4, triangulo5, TransfList, TransfList1, agregartransf, agregar
 from django.contrib.auth.views import LoginView, LogoutView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('api/', include('triangulo_app.urls')),
+    path('api/', include('triangulo_app.urls')),
     path('', homehtml),
     path('eliminartransf/<int:id>', eliminartransf),
     path('fallas/', fallas),
