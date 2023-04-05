@@ -8,15 +8,21 @@ const { createApp } = Vue
   createApp({
     delimiters: ['{$', '$}'],
     created(){
-        axios.get('/api/buscar/')
+        axios.get('/api/transformadores/')
         .then(response => this.transformadores = response.data);
+        axios.get('/api/nombre/')
+        .then(response => this.nombre = response.data);
     },
     data() {
       return {
-        message: 'Hello ',
+        ver: false,
+        keyselec: '',
+        idselec: '',
+        nombreselec: '',
         mostrar: '',
         kword: '',
-        transformadores: []
+        transformadores: [],
+        nombre: []
       }
     },
     watch:{
@@ -30,21 +36,34 @@ const { createApp } = Vue
         }
     },
     methods:{
-        Actualizar: function(){
-          axios.get('/api/buscar/')
+        fechaform: function (fecha){
+          return moment(fecha).format('DD/MM/YYYY. H:mm:ss a');
+        },
+        Actualizarlis: function(){
+          axios.get('/api/mostrar/?kword=' + this.mostrar)
           .then(response => this.transformadores = response.data);
         },
+        ActualizarT: function(){
+          axios.get('/api/transformadores')
+          .then(response => this.transformadores = response.data);
+        },
+        ActualizarN: function(){
+          axios.get('/api/nombre/')
+          .then(response => this.nombre = response.data);
+        },
+        Seleccionar: function (nombre, key, id){
+          this.nombreselec = nombre
+          this.keyselec = key
+          this.idselec = id
+          console.log(this.nombreselec)
+        },
+
         an_triangulo_1: function (ch4, c2h2, c2h4){
           var a_ch4 = Number(100*(ch4)/(ch4+c2h2+c2h4));
           var b_c2h2 = Number(100*(c2h2)/(ch4+c2h2+c2h4));
           var c_c2h4 = Number(100*(c2h4)/(ch4+c2h2+c2h4));
-          if (20 <= b_c2h2 && b_c2h2 < 70){
-            console.log('es')
-          }
-          console.log(a_ch4)
-          console.log(b_c2h2)
-          console.log(c_c2h4)
-          if (0 <= a_ch4 && a_ch4 < 87 && 0 <= c_c2h4 && c_c2h4 <= 23 && 13 < b_c2h2 && b_c2h2 < 100){
+
+          if (0 <= a_ch4 && a_ch4 < 87 && 0 <= c_c2h4 && c_c2h4 <= 23 && 13 < b_c2h2 && b_c2h2 <= 100){
             return ('D1')
           } else if (0 <= a_ch4 && a_ch4<50 && 30<c_c2h4 && c_c2h4 <77 && 23<=b_c2h2 && b_c2h2 <70){
             return ('D2')
@@ -56,9 +75,9 @@ const { createApp } = Vue
             return ('T1')
           } else if (46<=a_ch4 && a_ch4<80 && 20<c_c2h4 && c_c2h4<=50 && 0<=b_c2h2 && b_c2h2<=4){
             return ('T2')
-          } else if (0<=a_ch4 && a_ch4<50 && 50<c_c2h4 && c_c2h4<100 && 0<=b_c2h2 && b_c2h2<15){
+          } else if (0<=a_ch4 && a_ch4<50 && 50<c_c2h4 && c_c2h4<=100 && 0<=b_c2h2 && b_c2h2<15){
             return ('T3')
-          } else if (0<=a_ch4 && a_ch4<=47 && 40<c_c2h4 && c_c2h4<100 && 15<=b_c2h2 && b_c2h2<30){
+          } else if (0<=a_ch4 && a_ch4<=47 && 40<c_c2h4 && c_c2h4<=100 && 15<=b_c2h2 && b_c2h2<30){
             return ('DT')
           } else if (35<a_ch4 && a_ch4<96 && 0<=c_c2h4 && c_c2h4<50 && 4<b_c2h2 && b_c2h2<15){
             return ('DT')
@@ -83,7 +102,7 @@ const { createApp } = Vue
           } else if (40<a_h2 && a_h2<100 && 0<c_ch4 && c_ch4<36 && 0<b_c2h6 && b_c2h6<24){
             return 'S'
           } else{
-            return ''
+            return '-'
           }
               
         },
@@ -117,7 +136,7 @@ const { createApp } = Vue
           } else if (22<a_ch4 && a_ch4<88 && 10<c_c2h4 && c_c2h4<48 && 12<b_c2h6 && b_c2h6<30){
             return 'C'
           } else{
-            return ''
+            return '-'
           }
               
         },
@@ -152,24 +171,20 @@ const { createApp } = Vue
             html:`
               <form id="Form">
               <div class="row" style="padding: 0.5in;">
-                  <div class="col-md-6">
                       <input type="hidden" value="${id}" id="id" name="id">
                       <label class="form-label">Nombre</label>
-                      <input class="form-control" type="text" name="Nombre" id="Nombre" value="${Nombre}"
+                      <input type="hidden" class="form-control" type="text" name="Nombre" id="Nombre" value="${Nombre}"
                       placeholder="Nombre" maxlength="30" required autofocus minlength="3"/>
                       <label class="form-label">CH4pmm</label>
                       <input required class="form-control" type="number" name="CH4ppm" value="${CH4ppm}" id="CH4ppm"/>
                       <label class="form-label">C2H4ppm</label>
                       <input required class="form-control" type="number" name="C2H4ppm" value="${C2H4ppm}" id="C2H4ppm"/>
-                  </div>
-                  <div class="col-md-6">
                       <label class="form-label">C2H2ppm</label>
                       <input required class="form-control" type="number" name="C2H2ppm" value="${C2H2ppm}" id="C2H2ppm"/>
                       <label class="form-label">H2ppm</label>
                       <input required class="form-control" type="number" name="H2ppm" value="${H2ppm}" />
                       <label class="form-label">C2H6ppm</label>
-                      <input required class="form-control" type="number" name="C2H6ppm" value="${C2H6ppm}" />                                
-                  </div>
+                      <input required class="form-control" type="number" name="C2H6ppm" value="${C2H6ppm}" />
               </div>
               </form>
             `
@@ -201,9 +216,10 @@ const { createApp } = Vue
                 t5fallas: String(t5fallas)
 
               }).then(response => {
-                this.Actualizar()
+                this.ActualizarT();
+                Swal.fire('Saved!', '', 'success')
               })
-              Swal.fire('Saved!', '', 'success')
+              
               
               
             } else if (result.isDenied) {
@@ -211,7 +227,8 @@ const { createApp } = Vue
             }
           })
         },
-        Agregar: function(){
+        Lectura: function(){
+          var Nombre = this.nombreselec
           Swal.fire({
             preConfirm: () => {
               const datos = document.querySelector("#Form");
@@ -219,12 +236,6 @@ const { createApp } = Vue
               const formDataObj = {};
               act_datos.forEach((value, key) => (formDataObj[key] = value));
               let name = String(formDataObj.Nombre).trim();
-                  if (name.length == 0) {
-                    Swal.showValidationMessage(
-                      `El nombre no puede estar vacio`)
-                    return false
-                    
-                  }
                   if (Number(formDataObj.CH4ppm) + Number(formDataObj.C2H4ppm) + Number(formDataObj.C2H2ppm) == 0){
                     Swal.showValidationMessage('CH4ppm, C2H4ppm y C2H2ppm no pueden sumar 0')
                     return false
@@ -234,23 +245,17 @@ const { createApp } = Vue
             html:`
               <form id="Form">
               <div class="row" style="padding: 0.5in;">
-                  <div class="col-md-6">
-                      <label class="form-label">Nombre</label>
-                      <input class="form-control" type="text" name="Nombre" id="Nombre" value=""
-                      placeholder="Nombre" maxlength="30" required autofocus minlength="3"/>
+                      <h5>Nueva Lectura</h5>
                       <label class="form-label">CH4pmm</label>
                       <input required class="form-control" type="number" name="CH4ppm" value="0" id="CH4ppm"/>
                       <label class="form-label">C2H4ppm</label>
                       <input required class="form-control" type="number" name="C2H4ppm" value="0" id="C2H4ppm"/>
-                  </div>
-                  <div class="col-md-6">
                       <label class="form-label">C2H2ppm</label>
                       <input required class="form-control" type="number" name="C2H2ppm" value="0" id="C2H2ppm"/>
                       <label class="form-label">H2ppm</label>
                       <input required class="form-control" type="number" name="H2ppm" value="0" />
                       <label class="form-label">C2H6ppm</label>
-                      <input required class="form-control" type="number" name="C2H6ppm" value="0" />                                
-                  </div>
+                      <input required class="form-control" type="number" name="C2H6ppm" value="0" />
               </div>
               </form>
             `
@@ -274,7 +279,7 @@ const { createApp } = Vue
               console.log(formDataObj);
               console.log(formDataObj.C2H6ppm)
               axios.post('/api/transformadores/', {
-                nombre : formDataObj.Nombre,
+                nombre : this.idselec,
                 CH4ppm : formDataObj.CH4ppm,
                 C2H4ppm : formDataObj.C2H4ppm,
                 C2H2ppm : formDataObj.C2H2ppm,
@@ -284,9 +289,10 @@ const { createApp } = Vue
                 t4fallas: t4fallas,
                 t5fallas: t5fallas
               }).then(response => {
-                this.Actualizar()
+                this.Actualizarlis()
+                Swal.fire('Saved!', '', 'success')
               })
-              Swal.fire('Saved!', '', 'success')
+              
               
               
             } else if (result.isDenied) {
@@ -297,7 +303,7 @@ const { createApp } = Vue
         Borrar: function(e, key){
            Swal.fire({
               title: "Estás seguro?",
-              text: "Este objeto no se podrá recuperar",
+              text: "Se eliminará esta lectura",
               icon: "warning",
               showCancelButton: true,
             })
@@ -306,7 +312,7 @@ const { createApp } = Vue
                 
                 axios.delete('/api/transformadores/' + e + '/').then(response => 
                   Swal.fire({
-                    text: "Poof! El objeto ha sido eliminado",
+                    text: "La lectura ha sido eliminada",
                     icon: "success",
                   }),
                   this.transformadores.splice(key,1))
@@ -316,9 +322,11 @@ const { createApp } = Vue
                 console.log(e, key)
               }
             })          
-          },
+        },
         Mostrar: function(mostrar) {
+          this.ver= true;
           var self = this;
+          console.log(mostrar);
           axios.get('/api/mostrar/?kword=' + mostrar)
           .then(function(response){
               self.transformadores=response.data
@@ -327,10 +335,11 @@ const { createApp } = Vue
           .catch(function(error){
               console.log(error);
           })
-      },
+        },
         Buscar: function(kword) {
             var self = this;
-            axios.get('/api/buscar/?kword=' + kword)
+            console.log(kword);
+            axios.get('/api/buscar/?kword=' + Number(this.mostrar) + '&fecha=' + kword)
             .then(function(response){
                 self.transformadores=response.data
                 console.log(response.data)
@@ -338,8 +347,89 @@ const { createApp } = Vue
             .catch(function(error){
                 console.log(error);
             })
-        }
+        },
+        Eliminartransf: function(){
+          Swal.fire({
+             title: "Estás seguro?",
+             text: "Se eliminara el Transformador "+ String(this.nombreselec) + " y todo su historial",
+             icon: "warning",
+             showCancelButton: true,
+           })
+           .then((result) => {
+             if (result.isConfirmed) {
+               
+               axios.delete('/api/nombre/' + this.idselec + '/').then(response => {
+                 Swal.fire({
+                   text: "Poof! El objeto ha sido eliminado",
+                   icon: "success",
+                 }),
+                 this.nombre.splice(this.keyselec,1)
+                 this.ActualizarT()
+                 this.ver = false
+                })
+                 
+               
+             } else {
+               Swal.fire("Este objeto está a salvo")
+             }
+           })          
+        },
+        Agregartransf: function(){
+          Swal.fire({
+            preConfirm: () => {
+              const datos = document.querySelector("#Form");
+              const act_datos = new FormData(datos);
+              const formDataObj = {};
+              act_datos.forEach((value, key) => (formDataObj[key] = value));
+              let name = String(formDataObj.Nombre).trim();
+                  if (name.length == 0) {
+                    Swal.showValidationMessage(
+                      `El nombre no puede estar vacio`)
+                    return false
+                    
+                  }
+                  if (Number(formDataObj.CH4ppm) + Number(formDataObj.C2H4ppm) + Number(formDataObj.C2H2ppm) == 0){
+                    Swal.showValidationMessage('CH4ppm, C2H4ppm y C2H2ppm no pueden sumar 0')
+                    return false
+                  }
+                
+            },
+            html:`
+              <form id="Form">
+              <div class="row" style="padding: 0.5in;">
+                      <h1>Añada el Nombre sel nuevo Transformador</h1>
+                      <input class="form-control" type="text" name="Nombre" id="Nombre" value=""
+                      placeholder="Nombre" maxlength="30" required autofocus minlength="3"/>
+              </div>
+              </form>
+            `
+          }).then((result) => {
+            if (result.value) {
+              
+              const datos = document.querySelector("#Form");
+              const act_datos = new FormData(datos);
+              const formDataObj = {};
+              act_datos.forEach((value, key) => (formDataObj[key] = value));
+              
+              
+              axios.post('/api/nombre/', {
+                nombre : formDataObj.Nombre,
+              }).then(response => {
+                this.ActualizarN()
+                Swal.fire('Saved!', '', 'success')
+              })
+              
+              
+              
+            } else if (result.isDenied) {
+              Swal.fire('Changes are not saved', '', 'info')
+            }
+          })
+        },
 
+    },
+    filters:{
+      
     }
   }).mount('#app')
 

@@ -4,7 +4,8 @@ from triangulo_app.models import transformador
 import re
 
 
-def triangulo_1 (ch4, c2h2, c2h4, name):
+def triangulo_1 (ch4, c2h2, c2h4, name, fecha):
+        
     trace1 = {
         "name": "PD",
         "uid": "a1a8b8",
@@ -97,13 +98,17 @@ def triangulo_1 (ch4, c2h2, c2h4, name):
         "fillcolor": "#b3de69"
         }
     trace8 = {
-        'name': 'Falla',                    
+        'text': ('al','lal','hkdjhw'),
+        'name': 'falla',                    
         "a": ch4,
-        "b":c2h2,
+        "b": c2h2,
         "c": c2h4,
         "mode": "markers",
         "type": "scatterternary", 
-        'hovertext': name,       
+        "hovertemplate": [  '<br>'
+                            '<br> CH4:%{a}'
+                            '<br> C2H4:%{c}'
+                            '<br> C2H2:%{b}'],   
         "marker": {
             "size": 20,
             "color": "black",
@@ -140,10 +145,16 @@ def triangulo_1 (ch4, c2h2, c2h4, name):
         "showlegend": False
         }
     fig = go.Figure([trace1,trace2,trace3,trace4,
-                  trace5, trace6, trace7,trace8], layout=layout)
+                  trace5, trace6, trace7], layout=layout)
+    for a,b,c,d,e in zip(ch4,c2h2,c2h4,name,fecha):
+        fig.add_trace(go.Scatterternary(a=[a], b=[b], c=[c] , mode='markers', marker=dict(size= 20, color= "black",
+                                                                                    symbol= 100), 
+                                        text= [d + '<br>'+ e],
+                                        hovertemplate='%{text}<br><br> CH4:%{a}<br> C2H4:%{c}<br> C2H2:%{b}<extra></extra>',
+                                        ))
     return fig
 
-def triangulo_4 (h2, c2h6, ch4, name):
+def triangulo_4 (h2, c2h6, ch4, name, fecha):
     trace1 = {
         "name": "O",
         "uid": "a1a8b8",
@@ -216,7 +227,10 @@ def triangulo_4 (h2, c2h6, ch4, name):
         "c": ch4,
         "mode": "markers",
         "type": "scatterternary",
-        "hovertext": name,
+        "hovertemplate": ['%{name}<br> %{fecha}'
+                          '<br> H2:%{a}'
+                          '<br> CH4:%{c}'
+                          '<br> C2H6:%{b}'], 
         "marker": {
             "size": 20,
             "color": "black",
@@ -252,10 +266,17 @@ def triangulo_4 (h2, c2h6, ch4, name):
         "autosize": True,
         "showlegend": False
         }
-    fig = go.Figure([trace1, trace2, trace3, trace4, trace5, trace6], layout=layout)
+    fig = go.Figure([trace1, trace2, trace3, trace4, trace5], layout=layout)
+    for a,b,c,d,e in zip(h2,c2h6,ch4,name,fecha):
+        print(d + '  '+ e)
+        fig.add_trace(go.Scatterternary(a=[a], b=[b], c=[c] , mode='markers', marker=dict(size= 20, color= "black",
+                                                                                    symbol= 100), 
+                                        text= [d + '<br>'+ e],
+                                        hovertemplate='%{text}<br><br> H2:%{a}<br> CH4:%{c}<br> C2H6:%{b}<extra></extra>',
+                                        ))
     return fig
 
-def triangulo_5 (ch4, c2h6, c2h4, name):
+def triangulo_5 (ch4, c2h6, c2h4, name, fecha):
     trace1 = {
         "name": "PD",
         "uid": "a1a8b8",
@@ -348,13 +369,17 @@ def triangulo_5 (ch4, c2h6, c2h4, name):
         "fillcolor": "#fdb462"
         }
     trace8 = {
+        "text": name,
         "name": "falla",
         "a": ch4,
         "b": c2h6,
         "c": c2h4,
         "mode": "markers",
         "type": "scatterternary",
-        "hovertext": name,
+        "hovertemplate": ['%{text}<br> %{text.fecha}'
+                          '<br> CH4:%{a}'
+                          '<br> C2H4:%{c}'
+                          '<br> C2H6:%{b}'], 
         "marker": {
             "size": 20,
             "color": "black",
@@ -391,7 +416,14 @@ def triangulo_5 (ch4, c2h6, c2h4, name):
         "showlegend": False
         }
     fig = go.Figure([trace1, trace2, trace3, trace4, trace5, trace6,
-                     trace7, trace8], layout=layout)
+                     trace7], layout=layout)
+    for a,b,c,d,e in zip(ch4,c2h6,c2h4,name,fecha):
+        print(d + '  '+ e)
+        fig.add_trace(go.Scatterternary(a=[a], b=[b], c=[c] , mode='markers', marker=dict(size= 20, color= "black",
+                                                                                    symbol= 100), 
+                                        text= [d + '<br>'+ e],
+                                        hovertemplate='%{text}<br><br> CH4:%{a}<br> C2H4:%{c}<br> C2H6:%{b}<extra></extra>',
+                                        ))
     return fig
 
 def an_triangulo_1 (a_ch4, b_c2h2, c_c2h4):

@@ -23,7 +23,6 @@
                     <li class="nav-item"><a class="nav-link active" href="/fallas"><i class="fas fa-table"></i><span>Table</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/login"><i class="far fa-user-circle"></i><span>Login</span></a></li>
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="/agregar"><i class="fas fa-window-maximize"></i><span>Agregar</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i><span>Logout</span></a></li>
                     {% endif %}
                 </ul>
@@ -39,38 +38,43 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-7 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Buscar por falla en triángulo 1
+                                <div class="col-md-4 text-nowrap">
+                                    <div><label>Transformador
+                        
                                         <select class="d-inline-block form-select form-select-sm"
                                         v-model="mostrar">
-                                            <option value="">all</option>
-                                            <option value="PD">PD</option>
-                                            <option value="T1">T1</option>
-                                            <option value="T2">T2</option>
-                                            <option value="T3">T3</option>
-                                            <option value="D1">D1</option>
-                                            <option value="D2">D2</option>
-                                            <option value="DT">DT</option>
+                                            <option :value="nom.id" v-for="(nom, id) in nombre"
+                                            :key="id" @click="Seleccionar(nom.nombre, id, nom.id)">{$nom.nombre$}</option>
                                         </select></label>
                                     </div>
                                 </div>
+                                {% if user.is_authenticated %}
                                 <div class="col-md-1">
-                                    <button class="btn btn-block btn-info" @click="Agregar">Agregar</button>
+                                    <button class="btn btn-block btn-info" @click="Agregartransf">Agregar Transf</button>
                                 </div>
+                                <div v-show="ver" class="col-md-1">
+                                    <button class="btn btn-block btn-danger btnEliminacion" @click="Eliminartransf">Eliminar Transf</button>
+                                </div>
+                                <div v-show="ver" class="col-md-1">
+                                    <button class="btn btn-block btn-info" @click="Lectura">Agregar Lectura</button>
+                                </div>
+                                {% endif %}
                                 <div class="col-md-4">
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label"><input type="search"
+                                        <label class="form-label"><input type="date"
                                             class="form-control"
                                             placeholder="Buscar por Nombre"
                                             v-model="kword"
                                             ></label></div>
                                 </div>
                             </div>
-                            <table class="table my-0 btnEliminacion" id="dataTable">
+                            <div>
+                                <h3 v-show="!ver">Todas las lecturas</h3>
+                                <table class="table my-0" id="dataTable">
                                 {% csrf_token %}
                                 <thead>
                                     <tr>
-                                        <th>transformadores</th>               
+                                        <th>Fecha de creación</th>               
                                         <th>CH4ppm</th>               
                                         <th>C2H4ppm</th>      
                                         <th>C2H2ppm</th>      
@@ -88,7 +92,7 @@
                                     <tr
                                     v-for="(trans, id) in transformadores"
                                     :key="id">
-                                        <td>{$trans.nombre$}</td>
+                                        <td>{$fechaform(trans.fecha)$}</td>
                                         <td>{$trans.CH4ppm$}</td>
                                         <td>{$trans.C2H4ppm$}</td>
                                         <td>{$trans.C2H2ppm$}</td>
@@ -106,7 +110,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>transformadores</th>               
+                                        <th>Fecha de creación</th>               
                                         <th>CH4ppm</th>               
                                         <th>C2H4ppm</th>      
                                         <th>C2H2ppm</th>      
@@ -120,7 +124,8 @@
                                         {% endif %}
                                     </tr>
                                 </tfoot>
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,6 +142,7 @@
     <script type="text/javascript" src="{% static 'app.js' %}"></script>
     <script type="text/javascript" src="{% static 'sweetalert.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'sweetalert2.all.js' %}"></script>
+    <script type="text/javascript" src="{% static 'moment.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
