@@ -149,7 +149,7 @@ def triangulo_1 (ch4, c2h2, c2h4, name, fecha, falla):
     for a,b,c,d,e,f in zip(ch4,c2h2,c2h4,name,fecha,falla):
         fig.add_trace(go.Scatterternary(a=[a], b=[b], c=[c] , mode='markers', marker=dict(size= 20, color= "black",
                                                                                     symbol= 100), 
-                                        text= [d + '<br>'+ e + '<br>'+ f],
+                                        text= ['Transformador: ' + d + '<br>Fecha: '+ e + '<br>Falla: '+ f],
                                         hovertemplate='%{text}<br><br> CH4:%{a}<br> C2H4:%{c}<br> C2H2:%{b}<extra></extra>',
                                         ))
     return fig
@@ -271,7 +271,7 @@ def triangulo_4 (h2, c2h6, ch4, name, fecha, falla):
         print(d + '  '+ e)
         fig.add_trace(go.Scatterternary(a=[a], b=[b], c=[c] , mode='markers', marker=dict(size= 20, color= "black",
                                                                                     symbol= 100), 
-                                        text= [d + '<br>'+ e + '<br>'+ f],
+                                        text= ['Transformador: ' + d + '<br>Fecha: '+ e + '<br>Falla: '+ f],
                                         hovertemplate='%{text}<br><br> H2:%{a}<br> CH4:%{c}<br> C2H6:%{b}<extra></extra>',
                                         ))
     return fig
@@ -421,7 +421,7 @@ def triangulo_5 (ch4, c2h6, c2h4, name, fecha, falla):
         print(d + '  '+ e)
         fig.add_trace(go.Scatterternary(a=[a], b=[b], c=[c] , mode='markers', marker=dict(size= 20, color= "black",
                                                                                     symbol= 100), 
-                                        text= [d + '<br>'+ e + '<br>'+ f],
+                                        text= ['Transformador: ' + d + '<br>Fecha: '+ e + '<br>Falla: '+ f],
                                         hovertemplate='%{text}<br><br> CH4:%{a}<br> C2H4:%{c}<br> C2H6:%{b}<extra></extra>',
                                         ))
     return fig
