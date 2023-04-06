@@ -9,9 +9,12 @@ from triangulo_app.serializer import gasserializer
 # Create your views here.
 def homehtml(request):
     lista = transformador.objects.all()
-    fig1 = triangulo_4 ([0], [0], [0],'','')
-    fig2 = triangulo_5 ([0], [0], [0],'','')
+    fig1 = triangulo_4 ([0], [0], [0],'','','')
+    fig2 = triangulo_5 ([0], [0], [0],'','','')
     name = []
+    fallat1 = []
+    fallat4= []
+    fallat5= []
     fecha = []
     ch4 = []
     c2h2= []
@@ -45,8 +48,19 @@ def homehtml(request):
             fecha.append(str(c.fecha.strftime("%d/%m/%Y")))
         except ValueError:
             pass
+        try:
+            fallat1.append(str(c.t1fallas))
+        except ValueError:
+            pass
+        try:
+            fallat4.append(str(c.t4fallas))
+        except ValueError:
+            pass
+        try:
+            fallat5.append(str(c.t5fallas))
+        except ValueError:
+            pass
         
-    print(name, fecha)
     ch4a = porcient(ch4,c2h2,c2h4)
     c2h2a = porcient(c2h2,ch4,c2h4)
     c2h4a = porcient(c2h4,ch4,c2h2)
@@ -55,11 +69,12 @@ def homehtml(request):
     c2h6b =[]
     nameb = []
     fechab = []
+    fallat4b= []
     id4 = []
     id5 = []
 
-    fig = triangulo_1 (ch4a, c2h2a, c2h4a, name, fecha)
-    for a,b,c,d,e,f,g,h,i in zip(ch4a, c2h2a, c2h4a, name, ch4, h2, c2h6, lista, fecha):
+    fig = triangulo_1 (ch4a, c2h2a, c2h4a, name, fecha, fallat1)
+    for a,b,c,d,e,f,g,h,i,j in zip(ch4a, c2h2a, c2h4a, name, ch4, h2, c2h6, lista, fecha,fallat4):
         er = h
         if an_triangulo_1 (a, b, c) == 'PD' or (
             an_triangulo_1 (a, b, c) == 'T1') or (
@@ -69,6 +84,7 @@ def homehtml(request):
                 c2h6b.append(g)
                 nameb.append(d)
                 fechab.append(i)
+                fallat4b.append(j)
                 id4.append(h)                
 
     ch4c = porcient(ch4b,h2b,c2h6b)
@@ -80,10 +96,11 @@ def homehtml(request):
     c2h4d =[]
     named = []
     fechad = []
+    fallat5d=[]
 
-    fig1 = triangulo_4 (h2c, c2h6c, ch4c, nameb, fechab)
+    fig1 = triangulo_4 (h2c, c2h6c, ch4c, nameb, fechab, fallat4b)
 
-    for a,b,c,d,e,f,g,h,i in zip(ch4a, c2h2a, c2h4a, name, ch4, c2h6, c2h4, lista, fecha):
+    for a,b,c,d,e,f,g,h,i,j in zip(ch4a, c2h2a, c2h4a, name, ch4, c2h6, c2h4, lista, fecha, fallat5):
         if an_triangulo_1 (a, b, c) == 'T2' or(
             an_triangulo_1 (a, b, c) == 'T3'):
             ch4d.append(e)
@@ -91,13 +108,15 @@ def homehtml(request):
             c2h4d.append(g)
             named.append(d)
             fechad.append(i)
+            fallat5d.append(j)
             id5.append(h)
 
+    
     ch4e = porcient(ch4d,c2h4d,c2h6d)
     c2h6e = porcient(c2h6d,ch4d,c2h4d)
     c2h4e = porcient(c2h4d,c2h6d,ch4d)
-                
-    fig2 = triangulo_5 (ch4e, c2h6e, c2h4e, named, fechad)
+    print(fallat5d)
+    fig2 = triangulo_5 (ch4e, c2h6e, c2h4e, named, fechad,fallat5d)
     figu = fig.to_html()
     figu1 = fig1.to_html()
     figu2 = fig2.to_html()
@@ -114,7 +133,7 @@ def triangulo1(request, id):
     ch4 = [float(transf.CH4ppm)]
     c2h2 = [float(transf.C2H2ppm)]
     c2h4 = [float(transf.C2H4ppm)]
-    fig = triangulo_1 (ch4, c2h2, c2h4, [transf.nombre.nombre], [str(transf.fecha.strftime("%d/%m/%Y"))])
+    fig = triangulo_1 (ch4, c2h2, c2h4, [transf.nombre.nombre], [str(transf.fecha.strftime("%d/%m/%Y"))], [transf.t1fallas])
     figu = fig.to_html()
     contexto = {'figura':figu}
     return render(request, 'figura.html', contexto)
@@ -123,7 +142,7 @@ def triangulo4(request, id):
     h2 = [float(transf.H2ppm)]
     c2h6 = [float(transf.C2H6ppm)]
     ch4 = [float(transf.CH4ppm)]
-    fig = triangulo_4 (h2, c2h6, ch4, [transf.nombre.nombre], [str(transf.fecha.strftime("%d/%m/%Y"))])
+    fig = triangulo_4 (h2, c2h6, ch4, [transf.nombre.nombre], [str(transf.fecha.strftime("%d/%m/%Y"))], [transf.t4fallas])
     figu = fig.to_html()
     contexto = {'figura':figu}
     return render(request, 'figura.html', contexto)
@@ -132,7 +151,7 @@ def triangulo5(request, id):
     ch4 = [float(transf.CH4ppm)]
     c2h6 = [float(transf.C2H6ppm)]
     c2h4 = [float(transf.C2H4ppm)]
-    fig = triangulo_5 (ch4, c2h6, c2h4, [transf.nombre.nombre], [str(transf.fecha.strftime("%d/%m/%Y"))])
+    fig = triangulo_5 (ch4, c2h6, c2h4, [transf.nombre.nombre], [str(transf.fecha.strftime("%d/%m/%Y"))], [transf.t5fallas])
     figu = fig.to_html()
     contexto = {'figura':figu}
     return render(request, 'figura.html', contexto)
