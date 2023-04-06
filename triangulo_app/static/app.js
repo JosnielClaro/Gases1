@@ -87,7 +87,8 @@ const { createApp } = Vue
           var a_h2 = Number(100*(h2)/(h2+c2h6+ch4));
           var b_c2h6 = Number(100*(c2h6)/(h2+c2h6+ch4));
           var c_ch4 = Number(100*(ch4)/(h2+c2h6+ch4));
-          if (0<a_h2 && a_h2<=9 && 0<c_ch4<70 && 30<=b_c2h6<100){
+          console.log(a_h2,b_c2h6,c_ch4)
+          if (0<a_h2 && a_h2<=9 && 0<c_ch4 && c_ch4<70 && 30<=b_c2h6<100){
             return 'O'
           } else if (84<a_h2 && a_h2<98 && 2<c_ch4 && c_ch4<15 && 0<b_c2h6 && b_c2h6<=1){
             return 'PD'
