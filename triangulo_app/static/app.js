@@ -245,7 +245,7 @@ const { createApp } = Vue
             },
             html:`
               <form id="Form">
-              <div class="row" style="padding: 0.5in;">
+              <div class="row">
                       <h5>Nueva Lectura</h5>
                       <label class="form-label">CH4pmm</label>
                       <input required class="form-control" type="number" name="CH4ppm" value="0" id="CH4ppm"/>
